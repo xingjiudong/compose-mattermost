@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    image: mattermost/mattermost-prod-app
+    image: mattermost/mattermost-enterprise-edition:5.25.1
     restart: unless-stopped
     environment:
       - MM_USERNAME=root
@@ -9,8 +9,10 @@ services:
       - MM_DBNAME=mattermost
       - MM_SQLSETTINGS_DRIVERNAME=mysql
       - MM_SQLSETTINGS_DATASOURCE=root:mattermost@tcp(db:3306)/mattermost?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s
+      - MM_PLUGINSETTINGS_ENABLEUPLOADS=true
+      - MM_SERVICESETTINGS_LISTENADDRESS=:8000
     ports:
-      - 80:8000
+      - 8000:8000
     depends_on:
       - "db"
   db:
